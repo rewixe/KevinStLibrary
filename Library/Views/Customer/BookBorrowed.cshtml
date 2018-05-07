@@ -1,0 +1,24 @@
+﻿
+@{
+	ViewBag.Title = "BookBorrowed";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BookBorrew</h2>
+
+@if (ViewBag.Success != null)
+{
+	<h6><span style="color: lawngreen">Successfully Added: </span> @ViewBag.Success</h6>
+}
+
+@if(ViewBag.Fail != null)
+{
+<h6><span style="color: red">No available copies: </span> @ViewBag.Fail</h6>
+}
+
+@if (ViewBag.AlreadyBorrowed != null)
+{
+	<h2>@ViewBag.AlreadyBorrowed</h2>
+}
+
+	<input type="button" value="User Area" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("UserArea", "Customer")'" />

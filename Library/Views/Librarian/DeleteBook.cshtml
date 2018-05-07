@@ -1,0 +1,12 @@
+﻿
+@{
+	ViewBag.Title = "DeleteBook";
+	Layout = "~/Views/Shared/LibrarianLayout.cshtml";
+}
+
+<h2>DeleteBook</h2>
+
+@if (ViewBag.BookDelete != null)
+{
+	<h5><span style="color: lime">Success:</span>@ViewBag.BookDelete <span style="color: red"> Deleted</span></h5>
+}

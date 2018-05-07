@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Library.Models.Item>
+@{
+	ViewBag.Title = "Search";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search</h2>
+
+@using (Html.BeginForm("Search", "Customer", FormMethod.Get))
+{
+	@Html.TextBox("searching") <input type="submit" value="Search" class="btn btn-primary btn-sm" />
+}
+
+<table class="table table-hover">
+	<thead>
+		<tr class="table-primary">
+			<th scope="col">Name</th>
+			<th scope="col">Isbn</th>
+			<th scope="col">Subject</th>
+			<th scope="col">Year</th>
+			<th scope="col">Borrow</th>
+
+
+	</thead>
+	<tbody>
+		@if (Model.Count() == 0)
+		{
+			<tr class="table-hover">
+				<td>
+					Enter Valid Search Term Please
+				</td>
+			</tr>
+		}
+		else
+		{
+			foreach (var item in Model)
+			{
+				<tr class="table-hover">
+					<th scope="row"> @item.Name</th>
+					<td> @item.Isbn</td>
+					<td> @item.Subject</td>
+					<td> @item.Year</td>
+					<td>
+						<input type="button" value="Borrow" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("BookBorrowed", "Customer", new { bookId = item.Isbn }, null)'" />
+					</td>
+				</tr>
+			}
+		}
+
+	</tbody>
+</table>
+
+<script>
+
+
+	var addStudent = document.getElementById("searchBtn");
+	addStudent.addEventListener("click", function () {
+		document.getElementById("searchTbl").style.visibility = "visible";
+
+	})
+</script>

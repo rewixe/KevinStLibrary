@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Library.Models.CopyItemTransacViewModel>
+@{
+	ViewBag.Title = "PreviousBook";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PreviousBook</h2>
+
+<div class="card text-white bg-info mb-3" style="max-width: 30rem;">
+	<div class="card-header">Header</div>
+	<div class="card-body">
+		<h4 class="card-title">Previously Borrrowed Books</h4>
+		<p class="card-text"></p>
+	</div>
+	<div style="color:black">
+		<ul class="list-group">
+
+			@foreach (var item in Model)
+			{
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					Book: @item.Name
+					Isbn: @item.Isbn
+				</li>
+
+			}
+
+		</ul>
+	</div>
+</div>

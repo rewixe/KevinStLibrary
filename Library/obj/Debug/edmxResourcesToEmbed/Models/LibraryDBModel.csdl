@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="AdminID" />
+    </Key>
+    <Property Name="AdminID" Type="Int32" Nullable="false" />
+    <Property Name="AdminLocation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="AuthorID" />
+    </Key>
+    <Property Name="AuthorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Isbn" Type="Int64" Nullable="false" />
+    <Property Name="AuthName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="Self.FK__Item__AuthorID__2A4B4B5E" FromRole="Author" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="Copy">
+    <Key>
+      <PropertyRef Name="CopyID" />
+    </Key>
+    <Property Name="CopyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Borrowed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Borrow_Date" Type="DateTime" Precision="0" />
+    <Property Name="Return_Date" Type="DateTime" Precision="0" />
+    <Property Name="Isbn" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="Self.FK__Copy__Isbn__29572725" FromRole="Copy" ToRole="Item" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__CopyI__31EC6D26" FromRole="Copy" ToRole="Transaction" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustID" />
+    </Key>
+    <Property Name="CustID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Privalige" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Fine" Type="Double" />
+    <Property Name="CPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Field" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__CustI__30F848ED" FromRole="Customer" ToRole="Transaction" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Isbn" />
+    </Key>
+    <Property Name="Isbn" Type="Int64" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AuthorID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Author" Relationship="Self.FK__Item__AuthorID__2A4B4B5E" FromRole="Item" ToRole="Author" />
+    <NavigationProperty Name="Copies" Relationship="Self.FK__Copy__Isbn__29572725" FromRole="Item" ToRole="Copy" />
+    <NavigationProperty Name="TagItems" Relationship="LibraryModel.FK__TagItem__Isbn__3D5E1FD2" FromRole="Item" ToRole="TagItem" />
+  </EntityType>
+  <EntityType Name="Librarian">
+    <Key>
+      <PropertyRef Name="LibrarianID" />
+    </Key>
+    <Property Name="LibrarianID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LibLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustID" Type="Int32" Nullable="false" />
+    <Property Name="CopyID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Copy" Relationship="Self.FK__Transacti__CopyI__31EC6D26" FromRole="Transaction" ToRole="Copy" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Transacti__CustI__30F848ED" FromRole="Transaction" ToRole="Customer" />
+    <Property Name="TransacType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__Item__AuthorID__2A4B4B5E">
+    <End Role="Author" Type="Self.Author" Multiplicity="1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Copy__Isbn__29572725">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="Copy" Type="Self.Copy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Isbn" />
+      </Principal>
+      <Dependent Role="Copy">
+        <PropertyRef Name="Isbn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__CopyI__31EC6D26">
+    <End Role="Copy" Type="Self.Copy" Multiplicity="1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Copy">
+        <PropertyRef Name="CopyID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="CopyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__CustI__30F848ED">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="CustID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LibraryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Administrators" EntityType="Self.Administrator" />
+    <EntitySet Name="Authors" EntityType="Self.Author" />
+    <EntitySet Name="Copies" EntityType="Self.Copy" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="Librarians" EntityType="Self.Librarian" />
+    <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+    <AssociationSet Name="FK__Item__AuthorID__2A4B4B5E" Association="Self.FK__Item__AuthorID__2A4B4B5E">
+      <End Role="Author" EntitySet="Authors" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Copy__Isbn__29572725" Association="Self.FK__Copy__Isbn__29572725">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="Copy" EntitySet="Copies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__CopyI__31EC6D26" Association="Self.FK__Transacti__CopyI__31EC6D26">
+      <End Role="Copy" EntitySet="Copies" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__CustI__30F848ED" Association="Self.FK__Transacti__CustI__30F848ED">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <EntitySet Name="Tags" EntityType="LibraryModel.Tag" />
+    <EntitySet Name="TagItems" EntityType="LibraryModel.TagItem" />
+    <AssociationSet Name="FK__TagItem__Isbn__3D5E1FD2" Association="LibraryModel.FK__TagItem__Isbn__3D5E1FD2">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="TagItem" EntitySet="TagItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TagItem__TagID__3C69FB99" Association="LibraryModel.FK__TagItem__TagID__3C69FB99">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="TagItem" EntitySet="TagItems" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="TagName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TagItems" Relationship="LibraryModel.FK__TagItem__TagID__3C69FB99" FromRole="Tag" ToRole="TagItem" />
+  </EntityType>
+  <EntityType Name="TagItem">
+    <Key>
+      <PropertyRef Name="TagItemId" />
+    </Key>
+    <Property Name="TagItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <Property Name="Isbn" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="LibraryModel.FK__TagItem__Isbn__3D5E1FD2" FromRole="TagItem" ToRole="Item" />
+    <NavigationProperty Name="Tag" Relationship="LibraryModel.FK__TagItem__TagID__3C69FB99" FromRole="TagItem" ToRole="Tag" />
+  </EntityType>
+  <Association Name="FK__TagItem__Isbn__3D5E1FD2">
+    <End Type="LibraryModel.Item" Role="Item" Multiplicity="1" />
+    <End Type="LibraryModel.TagItem" Role="TagItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Isbn" />
+      </Principal>
+      <Dependent Role="TagItem">
+        <PropertyRef Name="Isbn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TagItem__TagID__3C69FB99">
+    <End Type="LibraryModel.Tag" Role="Tag" Multiplicity="1" />
+    <End Type="LibraryModel.TagItem" Role="TagItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="TagID" />
+      </Principal>
+      <Dependent Role="TagItem">
+        <PropertyRef Name="TagID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

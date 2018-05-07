@@ -1,0 +1,61 @@
+﻿﻿
+@{
+    ViewBag.Title = "OpeningTimes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        table {
+            font-family: times news romance, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 10px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Opening hours</h1>
+    <table>
+        <tr>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Exceptions</th>
+        </tr>
+        <tr>
+            <td>Monday - Thursday</td>
+            <td>09.00 - 21.30</td>
+            <td>
+                04 June 2018 - 07 Sep 2018:
+                <br>09.00 - 19.30.
+            </td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td>09.00 - 17.15</td>
+            <td>
+                04 June 2018 - 07 Sep 2018:
+                <br> 09.00 - 19.30
+            </td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>09.00 - 16.30</td>
+            <td>Closed</td>
+        </tr>
+    </table>
+</body>
+</html>

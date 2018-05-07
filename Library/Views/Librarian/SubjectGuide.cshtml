@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Library.Models.Item>
+@{
+	ViewBag.Title = "SubjectGuide";
+	Layout = "~/Views/Shared/LibrarianLayout.cshtml";
+}
+
+
+
+<h2>SubjectGuide</h2>
+
+<div style="float:left; margin-right:10px;" id="listBooks">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Book</th>
+				<th scope="col">ISBN</th>
+				<th scope="col">Subject</th>
+				<th scope="col">Year</th>
+
+			</tr>
+
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+
+				<tr class="table-secondary">
+					<th scope="row"> @Html.DisplayFor(model => item.Name)</th>
+					<td> @Html.DisplayFor(model => item.Isbn)</td>
+					<td> @Html.DisplayFor(model => item.Subject)</td>
+					<td> @Html.DisplayFor(model => item.Year)</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

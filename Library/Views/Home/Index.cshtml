@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Library.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="mt-2">
+    <div class="row" style="">
+        <img style="height: 20%; width: 20%; display: block;" src="~/image/DIT.jpg" alt="Card image" hspace="70">
+    </div>
+</div>
+
+<div>
+    <form>
+        <div class="row">
+            <div class="col-sm-2">
+                <input type="button" value="Student Login" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Login", "Customer")'" />
+            </div>
+            <div class="col-sm-2">
+                <input type="button" value="Staff Login" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("StaffLogin", "Librarian")'" />
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </form>
+</div>
+
+
+

@@ -1,0 +1,101 @@
+﻿
+
+
+@model Library.Models.ItemLibrarianViewModel
+@{
+	ViewBag.Title = "AddStudent";
+	Layout = "~/Views/Shared/LibrarianLayout.cshtml";
+}
+
+<div class="mt-3"></div>
+
+<div class="row">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-2"></div>
+	<div class="col-sm-2"><input type="button" value="Subject Guides" class="btn btn-primary" onclick="location.href='@Url.Action("SubjectGuide", "Librarian")'" /></div>
+	<div class="col-sm-2"><input type="button" value="Books" class="btn btn-primary" onclick="location.href='@Url.Action("BookList", "Librarian")'" /></div>
+	<div class="col-sm-2"></div>
+	<div class="col-sm-2"> <input type="button" value="Log Out" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("LogOut", "Librarian")'" /></div>
+</div>
+
+<div class="row">
+	<div class="col-sm-3">
+		<div class="mt-3">
+			<h2>Add Students</h2>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-3">
+		<input type="button" value="Edit" class="btn btn-success" onclick="location.href='@Url.Action("StudentList", "Librarian")'" />
+		<button class="btn btn-success" id="addStdBtn">Add</button>
+	</div>
+</div>
+
+<div class="container">
+	<div class="mt-5"></div>
+	@if (ViewBag.StudentAdded != null)
+	{
+		<h6><span style="color: lawngreen">Success </span> @ViewBag.StudentAdded</h6>
+	}
+
+
+
+
+	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+	@using (Html.BeginForm("AddStudent", "Librarian", FormMethod.Post))
+	{
+
+		<form>
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary(true)
+			@if (ViewBag.Message != null)
+			{
+				@ViewBag.Message
+			}
+			@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+			<div id="studentTable" style="visibility: hidden;">
+				<h3>Add Students Here</h3>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">Password</th>
+							<th scope="col">Privalige</th>
+							<th scope="col">Field</th>
+
+					</thead>
+					<tbody>
+						<tr class="table-active">
+							<td scope="col">@Html.EditorFor(a => a.C.CustName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Name" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.C.CustEmail, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.C.CPassword, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Passoword" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.C.Privalige, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Privalige" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.C.Field, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Field" } })</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<button type="submit" style="visibility:hidden;" id="stdBtn" class="btn btn-success">Add Student</button>
+		</form>
+	}
+
+
+
+</div>
+<script>
+
+
+	var addStudent = document.getElementById("addStdBtn");
+	addStudent.addEventListener("click", function () {
+		document.getElementById("studentTable").style.visibility = "visible";
+		document.getElementById("stdBtn").style.visibility = "visible";
+		document.getElementById("bookTable").style.visibility = "hidden";
+		document.getElementById("bookBtn").style.visibility = "hidden";
+	})
+</script>
+

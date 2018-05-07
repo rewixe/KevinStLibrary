@@ -1,0 +1,89 @@
+﻿@model Library.Models.Librarian
+@{
+	ViewBag.Title = "AdminArea";
+	Layout = "~/Views/Shared/LibrarianLayout.cshtml";
+}
+
+<h2>Admin Area</h2>
+<div class="row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4"><h3>Welcome Library Administrator</h3></div>
+	<div class="col-sm-4"></div>
+</div>
+
+<div class="mt-3"></div>
+
+
+<div class="row">
+	<div class="col-sm-3">
+		<input type="button" value="Edit" class="btn btn-success" onclick="location.href='@Url.Action("LibrarianList", "Librarian")'" />
+		<button type="submit" class="btn btn-success" id="addBtn">Add</button>
+	</div>
+</div>
+
+<div class="container">
+	<div class="mt-5"></div>
+	@if (ViewBag.Success != null)
+	{
+		<h6><span style="color: lawngreen">Successfully Added: </span> @ViewBag.Success</h6>
+	}
+
+
+	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+	@using (Html.BeginForm("AdminArea", "Librarian", FormMethod.Post))
+	{
+
+		<form>
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary(true)
+			@if (ViewBag.Message != null)
+			{
+				@ViewBag.Message
+			}
+			@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+			<div id="LibTable" style="visibility:hidden;">
+				<h3>Add Books Here</h3>
+				<table class="table table-hover">
+					<thead>
+						<tr class="table-primary">
+							<th scope="col">LibrarianID</th>
+							<th scope="col">Name</th>
+							<th scope="col">Password</th>
+							<th scope="col">Campus</th>
+							<th scope="col">Position</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td scope="col">@Html.EditorFor(a => a.LibrarianID, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Librarian ID" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.Name, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Name" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Password" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.LibLocation, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Campus" } })</td>
+							<td scope="col">@Html.EditorFor(a => a.Position, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Position" } })</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<button type="submit" style="visibility: hidden;" id="bookBtn" class="btn btn-success">Add Librarian</button>
+		</form>
+	}
+
+
+
+
+</div>
+
+<script>
+	var addBook = document.getElementById("addBtn");
+	addBook.addEventListener("click", function () {
+		document.getElementById("LibTable").style.visibility = "visible";
+		document.getElementById("bookBtn").style.visibility = "visible";3
+	})
+
+
+</script>
+
+

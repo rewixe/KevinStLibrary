@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "BookSuggestions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        label {
+            font-family: arial, sans-serif;
+            display: inline-block;
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        red {
+            color: red;
+        }
+    </style>
+
+    <title>Book suggestion</title>
+</head>
+<body>
+    <h1> Suggestion of books for purchase</h1>
+    <p>
+        <red>* Required</red>
+        <form method="post" action="">
+            <label>Book title <red>*</red></label>
+            <br /><input type="text" name="title" required />
+    <p />
+    <label>Author <red>*</red></label>
+    <br /><input type="text" name="Author" required />
+    <p />
+    <label>ISBN/ISMN</label>
+    <br /><input type="text" name="ISBN/ISMN" />
+    <p />
+    <label>Edition</label>
+    <br /><input type="text" name="Edition" />
+    <p />
+    <label>Price</label>
+    <br /><input type="text" name="Price" />
+    <p />
+    <label>Year</label>
+    <br /> <input type="text" name="Year" />
+    <p />
+    <label>Student ID <red>*</red></label>
+    <br /><input type="text" name="StudentID" required />
+    <p />
+    <label>Your name <red>*</red></label>
+    <br /><input type="text" name="StudentName" required />
+    <p />
+    <label>DIT email <red>*</red></label>
+    <br /><input type="text" name="email" required />
+    <br />
+    <br /><input type="submit" value="Submit">
+    </form>
+</body>
+</html>
