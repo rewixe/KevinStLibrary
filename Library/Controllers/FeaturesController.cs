@@ -18,5 +18,9 @@ namespace Library.Controllers
         {
             return View();
         }
+        public ActionResult Study()
+        {
+            return View();
+        }
     }
 }

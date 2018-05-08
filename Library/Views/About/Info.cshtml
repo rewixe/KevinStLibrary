@@ -2,7 +2,10 @@
     ViewBag.Title = "Info";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
 <h2> About the library </h2>
-<base href="http://localhost:54725/About/">
-@Html.ActionLink("Opening times", "OpeningTimes")
-<br /> @Html.ActionLink("Library staff", "Librarian")
+<br />
+<input type="button" value="Opening Times" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("OpeningTimes","About")'" />
+<br />
+<br />
+<input type="button" value="Staff Info" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Librarian","About")'" />

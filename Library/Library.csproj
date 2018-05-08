@@ -357,6 +357,7 @@
     <Content Include="Views\Librarian\StudentList.cshtml" />
     <Content Include="Views\Librarian\SubjectGuide.cshtml" />
     <Content Include="Views\Customer\Search.cshtml" />
+    <Content Include="Views\Features\Study.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BookSuggestion\" />
