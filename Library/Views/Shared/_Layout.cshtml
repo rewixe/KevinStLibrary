@@ -16,14 +16,13 @@
 
 		<div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"> @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Home", "UserArea", "Customer", null, new { @class = "nav-link" })</li>
                 <li class="nav-item">@Html.ActionLink("Books", "BookList", "Book", null, new { @class = "nav-link" })</li>
                 <li class="nav-item">@Html.ActionLink("Features", "Features", "Features", null, new { @class = "nav-link" })</li>
                 <li class="nav-item">@Html.ActionLink("About", "Info", "About", null, new { @class = "nav-link" })</li>
             </ul>
 			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search">
-				<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                <input type="button" value="Log Out" class="btn btn-secondary btn-lg" onclick="location.href='@Url.Action("LogOut", "Customer")'" />
 			</form>
 		</div>
 	</nav>
