@@ -1,0 +1,51 @@
+﻿
+@model IEnumerable<Library.Models.Item>
+@{
+	ViewBag.Title = "SuggestedBook";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Suggested Books</h2>
+
+<div class="mt-5"></div>
+
+<div class="card mb-3" style="max-width: 35rem;">
+	<h3 class="card-header">Suggested Books</h3>
+	<div class="card-body">
+		<div class="mt-3"></div>
+		<h5 class="card-title">Books related to previously loaned books.</h5>
+		<h6 class="card-subtitle text-muted">If you would like to reserve a book just click the reserve button.</h6>
+	</div>
+	<div class="card-body">
+		<p class="card-text"></p>
+	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Title</th>
+				<th scope="col">Subject</th>
+				<th scope="col">Publish Year</th>
+				<th scope="col">ISBN</th>
+				<th scope="col">Reserve Book</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<th scope="row">@item.Name</th>
+					<td>@item.Subject</td>
+					<td>@item.Year</td>
+					<td>@item.Isbn</td>
+
+					<td><input type="button" value="Reserve" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("BookBorrowed", "Customer",  new { bookId = item.Isbn })'" /></td>
+
+
+				</tr>
+			}
+		</tbody>
+	</table>
+
+</div>
+
+
