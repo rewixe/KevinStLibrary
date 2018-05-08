@@ -36,7 +36,7 @@ namespace Library.Controllers
 				{
 					//Check the password and ID match
 					var obj = db.Librarians.Where(a => a.LibrarianID.Equals(libUser.LibrarianID) && a.Password.Equals(libUser.Password)).FirstOrDefault();
-					Debug.WriteLine(obj.Name.ToString());
+
 					if (obj != null)
 					{
 						if (obj.Position == "Admin")
@@ -60,6 +60,12 @@ namespace Library.Controllers
 							//redirect to the librarian page
 							return RedirectToAction("BookList");
 						}
+
+					}
+					else
+					{
+						ViewBag.IncorrectCredentials = "Please Enter Valid Login";
+						return View();
 
 					}
 

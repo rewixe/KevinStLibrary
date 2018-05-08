@@ -17,6 +17,11 @@
     <h3>@Session["Error"].ToString()</h3>
 }
 
+@if (ViewBag.IncorrectCredentials != null)
+{
+	<h5><span style="color: red">@ViewBag.IncorrectCredentials</span></h5>
+}
+
 @using (Html.BeginForm("StaffLogin", "Librarian", FormMethod.Post))
 {
     <form>
