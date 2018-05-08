@@ -291,5 +291,56 @@ namespace Library.Controllers
 
 
 		}
+
+
+		public ActionResult SuggestedBook()
+		{
+			if (Session["custID"] != null)
+			{
+				using (LibraryEntities db = new LibraryEntities())
+				{
+					int cID = Int32.Parse(Session["custID"].ToString());
+
+					var suggestedQuery = from i in db.Items
+										 join c in db.Copies on i.Isbn equals c.Isbn
+										 join t in db.Transactions on c.CopyID equals t.CopyID
+										 where c.CopyID == t.CopyID && t.CustID == cID && i.Isbn == c.Isbn
+										 select new ItemLibrarianViewModel { Cp = c, Tc = t, It = i };
+
+					/*var suggestedQuery = from i in db.Items
+										 join c in db.Copies on i.Isbn equals c.Isbn
+										 join t in db.Transactions on c.CopyID equals t.CopyID
+										 where c.CopyID == t.CopyID && t.CustID == cID && i.Isbn == c.Isbn
+										 select i.Subject;*/
+
+
+
+
+					foreach (ItemLibrarianViewModel t in suggestedQuery.ToList())
+					{
+						if (t.It.Subject != null)
+						{
+							var suggested = db.Items.Where(x => x.Name.Contains(t.It.Name));
+							if (suggested.Count() > 5)
+							{
+								return View(suggested.Take(5).ToList());
+							}
+							else
+							{
+								return View(db.Items.Where(x => x.Subject.Contains(t.It.Subject)).Take(5).ToList());
+							}
+						}
+					}
+
+				}
+				return View();
+			}
+			else
+			{
+				return RedirectToAction("Login");
+			}
+
+
+		}
 	}
 }
