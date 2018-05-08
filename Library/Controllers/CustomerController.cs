@@ -53,6 +53,12 @@ namespace Library.Controllers
 						Debug.WriteLine(Session["custID"].ToString());
 						return RedirectToAction("UserArea");
 					}
+					else
+					{
+						ViewBag.IncorrectCredentials = "Please Enter Valid Login";
+						return View();
+
+					}
 				}
 			}
 			return View(objUser);
