@@ -37,20 +37,6 @@ namespace Library.Controllers
 			}
 
 
-
-			DateTime today = DateTime.Now.Date;
-			DateTime retDay = today.AddDays(6);
-
-			var r = (retDay - today).Days;
-
-			Debug.WriteLine(today);
-			Debug.WriteLine(retDay);
-			Debug.WriteLine(r);
-
-
-
-
-
 			//used to validate that the rules of the model are being applied. ie required fields and correct format 
 			if (ModelState.IsValid)
 			{

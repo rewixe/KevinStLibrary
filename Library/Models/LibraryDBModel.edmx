@@ -270,7 +270,6 @@
           <Property Name="CPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Field" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__CustI__30F848ED" FromRole="Customer" ToRole="Transaction" />
-          <NavigationProperty Name="StudentRequests" Relationship="LibraryModel.FK__StudentRe__CustI__02FC7413" FromRole="Customer" ToRole="StudentRequest" />
           <NavigationProperty Name="ReqStudents" Relationship="LibraryModel.FK__ReqStuden__CustI__160F4887" FromRole="Customer" ToRole="ReqStudent" />
         </EntityType>
         <EntityType Name="Item">
@@ -390,11 +389,6 @@
             <End Role="Tag" EntitySet="Tags" />
             <End Role="TagItem" EntitySet="TagItems" />
           </AssociationSet>
-          <EntitySet Name="StudentRequests" EntityType="LibraryModel.StudentRequest" />
-          <AssociationSet Name="FK__StudentRe__CustI__02FC7413" Association="LibraryModel.FK__StudentRe__CustI__02FC7413">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="StudentRequest" EntitySet="StudentRequests" />
-          </AssociationSet>
           <EntitySet Name="ReqStudents" EntityType="LibraryModel.ReqStudent" />
           <AssociationSet Name="FK__ReqStuden__CustI__160F4887" Association="LibraryModel.FK__ReqStuden__CustI__160F4887">
             <End Role="Customer" EntitySet="Customers" />
@@ -440,32 +434,6 @@
             </Principal>
             <Dependent Role="TagItem">
               <PropertyRef Name="TagID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="StudentRequest">
-          <Key>
-            <PropertyRef Name="Isbn" />
-          </Key>
-          <Property Name="CustID" Type="Int32" Nullable="false" />
-          <Property Name="Isbn" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AuthName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Customer" Relationship="LibraryModel.FK__StudentRe__CustI__02FC7413" FromRole="StudentRequest" ToRole="Customer" />
-          <Property Name="ReqConfirmation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK__StudentRe__CustI__02FC7413">
-          <End Type="LibraryModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="LibraryModel.StudentRequest" Role="StudentRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustID" />
-            </Principal>
-            <Dependent Role="StudentRequest">
-              <PropertyRef Name="CustID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -645,8 +613,6 @@
         <AssociationConnector Association="LibraryModel.FK__Transacti__CustI__30F848ED" ManuallyRouted="false" />
         <AssociationConnector Association="LibraryModel.FK__TagItem__Isbn__3D5E1FD2" ManuallyRouted="false" />
         <AssociationConnector Association="LibraryModel.FK__TagItem__TagID__3C69FB99" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="LibraryModel.StudentRequest" Width="1.5" PointX="7.5" PointY="9.625" />
-        <AssociationConnector Association="LibraryModel.FK__StudentRe__CustI__02FC7413" />
         <EntityTypeShape EntityType="LibraryModel.ReqStudent" Width="1.5" PointX="7.5" PointY="13.625" />
         <AssociationConnector Association="LibraryModel.FK__ReqStuden__CustI__160F4887" />
       </Diagram>

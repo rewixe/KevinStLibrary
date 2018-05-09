@@ -18,7 +18,6 @@ namespace Library.Models
         public Customer()
         {
             this.Transactions = new HashSet<Transaction>();
-            this.StudentRequests = new HashSet<StudentRequest>();
             this.ReqStudents = new HashSet<ReqStudent>();
         }
     
@@ -32,8 +31,6 @@ namespace Library.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentRequest> StudentRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReqStudent> ReqStudents { get; set; }
     }
