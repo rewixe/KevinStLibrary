@@ -39,6 +39,10 @@
 					@Html.ActionLink("New Book Requests", "Requests", "Librarian", null, new { @class = "nav-link" })
 				</li>
 
+				<li class="nav-item">
+					@Html.ActionLink("Currently Loaned Books", "CurrentlyLoaned", "Librarian", null, new { @class = "nav-link" })
+				</li>
+
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 				<input type="button" value="Log Out" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("LogOut", "Librarian")'" />

@@ -163,7 +163,7 @@ namespace Library.Controllers
 			{
 				using (LibraryEntities db = new LibraryEntities())
 				{
-					Debug.WriteLine("!!!LEVEL 1");
+					
 					int cID = Int32.Parse(Session["custID"].ToString());
 					var checkTrans = from c in db.Copies
 									 from t in db.Transactions
@@ -187,7 +187,7 @@ namespace Library.Controllers
 					{
 						foreach (Copy cp1 in copyQuery.ToList())
 						{
-							Debug.WriteLine("!!!LEVEL 2");
+							
 							if (cp1.Borrowed != "y")
 							{
 
@@ -204,7 +204,6 @@ namespace Library.Controllers
 								t1.TransacType = "Borrowed";
 								db.Transactions.Add(t1);
 								db.SaveChanges();
-								Debug.WriteLine("!!!LEVEL 3");
 								var book = db.Items.Where(a => a.Isbn.Equals(cp1.Isbn)).FirstOrDefault();
 								TempData["reserveMessage"] = book.Name.ToString() + ". Awaiting Collection Confirmation.";
 								return RedirectToAction("UserArea");
