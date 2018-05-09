@@ -368,6 +368,7 @@
     <Content Include="Views\Customer\BookSuggestions.cshtml" />
     <Content Include="Views\Librarian\Requests.cshtml" />
     <Content Include="Views\Customer\RequestPage.cshtml" />
+    <Content Include="Views\Librarian\CurrentlyLoaned.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BookSuggestion\" />

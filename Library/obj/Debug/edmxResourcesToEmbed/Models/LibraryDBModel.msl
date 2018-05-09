@@ -93,20 +93,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StudentRequests">
-      <EntityTypeMapping TypeName="LibraryModel.StudentRequest">
-        <MappingFragment StoreEntitySet="StudentRequest">
-          <ScalarProperty Name="ReqConfirmation" ColumnName="ReqConfirmation" />
-          <ScalarProperty Name="AuthName" ColumnName="AuthName" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="Subject" ColumnName="Subject" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Isbn" ColumnName="Isbn" />
-          <ScalarProperty Name="CustID" ColumnName="CustID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ReqStudents">
       <EntityTypeMapping TypeName="LibraryModel.ReqStudent">
         <MappingFragment StoreEntitySet="ReqStudent">

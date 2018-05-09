@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Library.Models.ItemLibrarianViewModel>
+@{
+				/**/
+
+				ViewBag.Title = "CurrentlyLoaned";
+				Layout = "~/Views/Shared/LibrarianLayout.cshtml";
+}
+
+<h2>Currently Loaned Books</h2>
+
+@if (ViewBag.FineMessage != null)
+{
+	<h5>@ViewBag.FineMessage</h5>
+}
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th scope="col">Student</th>
+			<th scope="col">Title</th>
+			<th scope="col">Isbn</th>
+			<th scope="col">Borrow Date</th>
+			<th scope="col">Return Date</th>
+		</tr>
+
+	</thead>
+	<tbody>
+
+
+
+		@foreach (var item in Model)
+		{
+			DateTime d = item.Cp.Return_Date ?? DateTime.Now;
+			var dateCheck = (d - DateTime.Now.Date).Days;
+
+			if (dateCheck < 0)
+			{
+
+				<tr class="table-secondary">
+					<th scope="row"> @item.C.CustName</th>
+					<td> @item.It.Name</td>
+					<td> @item.It.Isbn</td>
+					<td> @item.Cp.Borrow_Date</td>
+					<td> @item.Cp.Return_Date</td>
+					<td scope="col"><input type="button" value="Issue Fine" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("IssueFine", "Librarian", new { custID = item.C.CustID })'" /></td>
+				</tr>
+			}
+			else
+			{
+
+				<tr class="table-secondary">
+					<th scope="row"> @item.C.CustName</th>
+					<td> @item.It.Name</td>
+					<td> @item.It.Isbn</td>
+					<td> @item.Cp.Borrow_Date</td>
+					<td> @item.Cp.Return_Date</td>
+				</tr>
+			}
+		}
+
+	</tbody>
+</table>

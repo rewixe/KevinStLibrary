@@ -36,8 +36,8 @@
     <Property Name="CustID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CustName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CustEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Privalige" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-    <Property Name="Fine" Type="Double" />
+    <Property Name="Privalige" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Fine" Type="Int32" />
     <Property Name="CPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Field" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__CustI__30F848ED" FromRole="Customer" ToRole="Transaction" />

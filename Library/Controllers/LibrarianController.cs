@@ -500,7 +500,7 @@ namespace Library.Controllers
 					var book = db.Items.Where(a => a.Name.Contains(searching) || a.Subject.Contains(searching) || a.Isbn == numSearch || a.Year == numSearch || searching == null);
 
 					return View(book.ToList());
-					
+
 				}
 			}
 			else
@@ -800,7 +800,7 @@ namespace Library.Controllers
 				{
 					var reqQuery = from rIt in db.ReqStudents
 								   where rIt.ReqConfirmation == "Pending"
-								  select rIt;
+								   select rIt;
 
 					return View(db.ReqStudents.ToList());
 				}
@@ -814,12 +814,12 @@ namespace Library.Controllers
 
 		}
 
-		
-		public ActionResult ConfirmRequest( long Isbn, string name, string subject, string type, int year, string auth)
+
+		public ActionResult ConfirmRequest(long Isbn, string name, string subject, string type, int year, string auth)
 		{
 			if (Session["libID"] != null)
 			{
-			
+
 				using (LibraryEntities db = new LibraryEntities())
 				{
 					var reqItem = from rIt in db.ReqStudents
@@ -834,7 +834,7 @@ namespace Library.Controllers
 							AuthName = auth,
 							Isbn = Isbn
 						};
-						
+
 						i.AuthorID = a.AuthorID;
 						i.Isbn = Isbn;
 						i.Name = name;
@@ -847,7 +847,7 @@ namespace Library.Controllers
 						}
 						db.Authors.Add(a);
 						db.Items.Add(i);
-					
+
 						for (int index = 0; index < 10; index++)
 						{
 							Copy cp = new Copy();
@@ -878,7 +878,7 @@ namespace Library.Controllers
 			{
 				return RedirectToAction("StaffLogin");
 			}
-			
+
 		}
 
 
