@@ -509,6 +509,24 @@ namespace Library.Controllers
 			}
 		}
 
+		/*	public ActionResult Search()
+			{
+				return View();
+			}
+
+
+			public ActionResult Search(string searching)
+			{
+				using (LibraryEntities db = new LibraryEntities())
+				{
+
+					var book = db.Items.Where(a => a.Name.Contains(searching));
+
+					return View(book.ToList());
+				}
+
+
+			}*/
 
 
 		public ActionResult EditBook(long isbn)
@@ -881,7 +899,88 @@ namespace Library.Controllers
 
 		}
 
+		public ActionResult CurrentlyLoaned()
+		{
+			if (Session["libID"] != null)
+			{
+				if (TempData["fine"] != null)
+				{
+					ViewBag.FineMessage = TempData["fine"].ToString();
+				}
 
+				using (LibraryEntities db = new LibraryEntities())
+				{
+					var loanQuery = from i in db.Items
+									join c in db.Copies on i.Isbn equals c.Isbn
+									join t in db.Transactions on c.CopyID equals t.CopyID
+									join cS in db.Customers on t.CustID equals cS.CustID
+									where i.Isbn == c.Isbn && c.CopyID == t.CopyID && t.TransacType != "Returned" && t.CustID == cS.CustID && c.Borrow_Date != null
+									select new ItemLibrarianViewModel { It = i, Cp = c, Tc = t, C = cS };
+
+
+
+					/*foreach (ItemLibrarianViewModel item in loanQuery.ToList())
+					{
+					}*/
+					return View(loanQuery.ToList());
+
+				}
+
+
+			}
+			else
+			{
+				return RedirectToAction("StaffLogin");
+			}
+		}
+
+		public ActionResult IssueFine(int custID)
+		{
+			if (Session["libID"] != null)
+			{
+
+				using (LibraryEntities db = new LibraryEntities())
+				{
+					var fineQuery = from cust in db.Customers
+									join t in db.Transactions on cust.CustID equals t.CustID
+									join cp in db.Copies on t.CopyID equals cp.CopyID
+									where cust.CustID == custID && cust.CustID == t.CustID && t.CopyID == cp.CopyID
+									select new ItemLibrarianViewModel { C = cust, Cp = cp, Tc = t };
+
+					foreach (ItemLibrarianViewModel it in fineQuery.ToList())
+					{
+						it.C.Fine += 5;
+						it.Cp.Borrow_Date = null;
+					}
+					try
+					{
+
+						db.SaveChanges();
+						TempData["fine"] = "Fine Issued";
+						return RedirectToAction("CurrentlyLoaned");
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e);
+						// Provide for exceptions.
+					}
+
+
+
+					/*foreach (ItemLibrarianViewModel item in loanQuery.ToList())
+					{
+					}*/
+					return RedirectToAction("CurrentlyLoaned");
+
+				}
+			}
+			else
+			{
+				return RedirectToAction("StaffLogin");
+			}
+
+
+		}
 	}
 }
 

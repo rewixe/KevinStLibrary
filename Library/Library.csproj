@@ -259,9 +259,6 @@
       <DependentUpon>LibraryDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RequestViewModel.cs" />
-    <Compile Include="Models\StudentRequest.cs">
-      <DependentUpon>LibraryDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tag.cs">
       <DependentUpon>LibraryDBModel.tt</DependentUpon>
     </Compile>
