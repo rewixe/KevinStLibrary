@@ -53,7 +53,6 @@
 			<th scope="col">Name</th>
 			<th scope="col">Email</th>
 			<th scope="col">Password</th>
-			<th scope="col">Privalige</th>
 			<th scope="col">Field</th>
 			<th scope="col">Fine</th>
 			<th scope="col">Edit</th>
@@ -67,7 +66,6 @@
 				<td scope="col">@item.CustName</td>
 				<td scope="col">@item.CustEmail</td>
 				<td scope="col">@item.CPassword</td>
-				<td scope="col">@item.Privalige</td>
 				<td scope="col">@item.Field</td>
 				<td scope="col">@item.Fine</td>
 				<td scope="col"><input type="button" value="Edit" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("EditStudent", "Librarian",  new { custID = item.CustID })'" /></td>

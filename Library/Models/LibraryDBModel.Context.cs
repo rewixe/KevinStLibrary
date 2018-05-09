@@ -34,5 +34,7 @@ namespace Library.Models
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TagItem> TagItems { get; set; }
+        public virtual DbSet<StudentRequest> StudentRequests { get; set; }
+        public virtual DbSet<ReqStudent> ReqStudents { get; set; }
     }
 }

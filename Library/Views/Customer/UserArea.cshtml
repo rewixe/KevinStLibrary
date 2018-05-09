@@ -46,6 +46,10 @@
 				<h4><span style="color:red">No Copies</span>@ViewBag.UnavailableMessage</h4>
 
 			}
+			@if (ViewBag.RequestMessage != null)
+			{
+				<h4><span style="color:blue">Confirmation: </span>@ViewBag.RequestMessage</h4>
+			}
 		</div>
 
 	</div>
@@ -82,47 +86,50 @@
 						<th scope="col">Book</th>
 						<th scope="col">Borrowed Date</th>
 						<th scope="col">Return Date</th>
+						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var item in Model)
-					{
-						<tr>
-							<th scope="row">@item.Name</th>
-							<td>@item.Borrow_Date</td>
-							<td>@item.Return_Date</td>
-
-							<td><input type="button" value="Return" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("BookReturned", "Customer",  new { bookId = item.Isbn })'" /></td>
+					@{ 
+							foreach (var item in Model)
+							{
+								DateTime d = item.Return_Date ?? DateTime.Now;
+								var dateCheck = (d - DateTime.Now.Date).Days;
 
 
-						</tr>
-					}
+								if (dateCheck < 7)
+								{
+									<tr>
+										<th scope="row">@item.Name</th>
+										<td>@item.Borrow_Date</td>
+										<td>@item.Return_Date</td>
+										<td><span style="color: red;">Less than A week to return this book.</span></td>
+										<td><input type="button" value="Return" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("BookReturned", "Customer", new { bookId = item.Isbn })'" /></td>
+
+
+									</tr>
+								}
+								else
+								{
+									<tr>
+										<th scope="row">@item.Name</th>
+										<td>@item.Borrow_Date</td>
+										<td>@item.Return_Date</td>
+										
+										<td><input type="button" value="Return" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("BookReturned", "Customer", new { bookId = item.Isbn })'" /></td>
+
+
+									</tr>
+
+								}
+						}	}
 				</tbody>
 			</table>
 		</div>
 		<input type="button" value="Previously Borrowed Books" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("PreviousBook", "Customer")'" />
 	</div>
 	<div class="mt-5"></div>
-	<div class="col-sm-6">
-		<div class="card mb-3" style="max-width: 25rem;">
-			<h3 class="card-header">Suggested Books</h3>
-			<div class="card-body">
-				<h5 class="card-title"></h5>
-				<h6 class="card-subtitle text-muted"></h6>
-			</div>
-			<img style="height: auto; width: 30%; display: block;" src="~/image/compiler.jpg" alt="Card image">
 
-			<div class="card-body">
-				<p class="card-text"></p>
-			</div>
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">Electrical Engineering</li>
-				<li class="list-group-item">A Beginners Guide To Programming In C</li>
-				<li class="list-group-item"></li>
-			</ul>
-
-		</div>
-	</div>
 </div>
 
 

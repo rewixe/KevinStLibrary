@@ -36,6 +36,21 @@ namespace Library.Controllers
 				ViewBag.LoginMessage = TempData["loginMessage"].ToString();
 			}
 
+			
+
+			DateTime today = DateTime.Now.Date;
+			DateTime retDay = today.AddDays(6);
+
+			var r = (retDay - today).Days;
+
+			Debug.WriteLine(today);
+			Debug.WriteLine(retDay);
+			Debug.WriteLine(r);
+			
+
+
+
+
 			//used to validate that the rules of the model are being applied. ie required fields and correct format 
 			if (ModelState.IsValid)
 			{
@@ -86,6 +101,12 @@ namespace Library.Controllers
 				{
 					ViewBag.ReturnMessage = TempData["returnMessage"].ToString();
 				}
+
+				if (TempData["reqSent"] != null)
+				{
+					ViewBag.RequestMessage = TempData["reqSent"].ToString();
+				}
+
 				Item it = new Item();
 				LibraryEntities db = new LibraryEntities();
 
@@ -281,16 +302,55 @@ namespace Library.Controllers
 
 		public ActionResult Search()
 		{
+			
 			return View();
 		}
 
 		[HttpGet]
 		public ActionResult Search(string searching)
 		{
+			/*if (String.IsNullOrEmpty(searching))
+			{
+				TempData["Invalid Search"] = "Enter Valid Search Please";
+				return View();
+			}*/
+			
+			long numSearch;
+
+			bool IsAllAlphabetic(string search)
+			{
+				for(int i = 0; i < 1;i++)
+				{
+					char c = search[i];
+					if (!char.IsLetter(c))
+						return false;
+				}
+
+				return true;
+			}
+
+
+
+			if (searching != null)
+			{
+				if (IsAllAlphabetic(searching))
+				{
+					numSearch = 0;
+				}
+				else
+				{
+					numSearch = Int64.Parse(searching);
+				}
+			}
+			else
+			{
+				numSearch = 0;
+
+			}
 			using (LibraryEntities db = new LibraryEntities())
 			{
 
-				var book = db.Items.Where(a => a.Name.Contains(searching));
+				var book = db.Items.Where(a => a.Name.Contains(searching) || a.Subject.Contains(searching) || a.Isbn == numSearch || a.Year == numSearch);
 
 				return View(book.ToList());
 			}
@@ -347,6 +407,86 @@ namespace Library.Controllers
 			}
 
 
+		}
+
+		public ActionResult BookSuggestions()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult BookSuggestions([Bind(Include = "CustID,Name,AuthName,Isbn,Subject,Year,Type")]ReqStudent reqObj)
+		{
+			Debug.WriteLine("FUUCCKKK");
+			int cID = Int32.Parse(Session["custID"].ToString());
+			using (LibraryEntities db = new LibraryEntities())
+			{
+				// Add books.
+				if (ModelState.IsValid)
+				{
+
+					reqObj.CustID = cID;
+					reqObj.Type = "Book";
+					reqObj.ReqConfirmation = "Pending";
+					db.ReqStudents.Add(reqObj);
+					
+
+					try
+					{
+						
+						db.SaveChanges();
+						TempData["reqSent"] = "Request Sent";
+						return RedirectToAction("UserArea");
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e);
+						// Provide for exceptions.
+					}
+
+					ModelState.Clear();
+				}
+
+
+				
+			}//end ModelStateif
+			return View();
+		}//end ActionResult 
+
+		public ActionResult RequestPage()
+		{
+			if (Session["custID"] != null)
+			{
+				int cID = Int32.Parse(Session["custID"].ToString());
+				using (LibraryEntities db = new LibraryEntities())
+				{
+					var reqQuery = from r in db.ReqStudents
+								   where r.CustID == cID && r.ReqConfirmation == "Confirmed"
+								   select new RequestViewModel {Name = r.Name, AuthName = r.AuthName, ReqConfirmation = r.ReqConfirmation, Isbn = r.Isbn, Subject = r.Subject, Year = r.Year };
+
+					var req = db.ReqStudents.Where(a => a.CustID.Equals(cID));
+
+					reqQuery.ToList();
+
+					foreach (var i in reqQuery.ToList())
+					{
+						Debug.WriteLine(i.Name);
+						Debug.WriteLine(i.AuthName);
+						Debug.WriteLine(i.Isbn);
+						
+
+					}
+
+					return View(req.ToList());
+				}
+
+			}
+			else
+			{
+				return RedirectToAction("Login");
+			}
+				
 		}
 	}
 }

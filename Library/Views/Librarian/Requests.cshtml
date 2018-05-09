@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Library.Models.ReqStudent>
+
+@{
+	ViewBag.Title = "Requests";
+	Layout = "~/Views/Shared/LibrarianLayout.cshtml";
+}
+
+<h2>Requested Books from Students</h2>
+
+@if(ViewBag.ReqConfirmMessage != null)
+{
+<h5><span style="color: lawngreen">Confirmed: </span> @ViewBag.ReqConfirmMessage</h5>
+}
+<div class="mt-3">
+	<h5>Requests from students for books that are not currently available in the library.</h5>
+</div>
+<div class="mt-3">
+	<h5>Confirm that a book has been made available.</h5>
+</div>
+<table class="table">
+	<tr class="table-primary">
+		<th>
+			Title
+		</th>
+		<th>
+			Year
+		</th>
+		<th>
+			Subject
+		</th>
+
+		<th>
+			Author
+		</th>
+		<th>
+			ISBN
+		</th>
+		<th>
+			Student ID
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		if (item.ReqConfirmation == "Pending")
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Year)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Subject)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.AuthName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Isbn)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.CustID)
+				</td>
+				<td>
+					<input type="button" value="Confirm" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("ConfirmRequest", "Librarian", new { name = item.Name, Isbn = item.Isbn, subject = item.Subject, type = item.Type, year = item.Year, auth = item.AuthName })'" />
+				</td>
+			</tr>
+		}
+		else
+		{
+			<tr>
+				<td></td>
+			</tr>
+		}
+	}
+
+</table>

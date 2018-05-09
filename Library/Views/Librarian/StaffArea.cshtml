@@ -9,7 +9,6 @@
 <div class="row">
 	<div class="col-sm-2"></div>
 	<div class="col-sm-2"></div>
-	<div class="col-sm-2"><input type="button" value="Subject Guides" class="btn btn-primary" onclick="location.href='@Url.Action("SubjectGuide", "Librarian")'" /></div>
 	<div class="col-sm-2"><input type="button" value="Student Information" class="btn btn-primary" onclick="location.href='@Url.Action("StudentList", "Librarian")'" /></div>
 	<div class="col-sm-2"></div>
 	<div class="col-sm-2"> <input type="button" value="Log Out" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("LogOut", "Librarian")'" /></div>
@@ -51,7 +50,7 @@
 				@ViewBag.Message
 			}
 			@Html.ValidationSummary(false, "", new { @class = "text-danger" })
-			<div id="bookTable" style="visibility: hidden;">
+			<div id="bookTable">
 				<h3>Add Books Here</h3>
 				<table class="table table-hover">
 					<thead>
@@ -76,7 +75,7 @@
 					</tbody>
 				</table>
 			</div>
-			<button type="submit" style="visibility:hidden;" id="bookBtn" class="btn btn-success">Add Book</button>
+			<button type="submit" id="bookBtn" class="btn btn-success">Add Book</button>
 		</form>
 	}
 
@@ -84,14 +83,3 @@
 
 
 </div>
-<script>
-	var addBook = document.getElementById("addBtn");
-	addBook.addEventListener("click", function () {
-		document.getElementById("bookTable").style.visibility = "visible";
-		document.getElementById("bookBtn").style.visibility = "visible";
-		document.getElementById("studentTable").style.visibility = "hidden";
-		document.getElementById("stdBtn").style.visibility = "hidden";
-	})
-
-
-</script>

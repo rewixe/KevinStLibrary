@@ -12,12 +12,17 @@ namespace Library.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Librarian
+    public partial class StudentRequest
     {
-        public int LibrarianID { get; set; }
+        public int CustID { get; set; }
+        public long Isbn { get; set; }
         public string Name { get; set; }
-        public string Password { get; set; }
-        public string LibLocation { get; set; }
-        public string Position { get; set; }
+        public int Year { get; set; }
+        public string Subject { get; set; }
+        public string Type { get; set; }
+        public string AuthName { get; set; }
+        public string ReqConfirmation { get; set; }
+    
+        public virtual Customer Customer { get; set; }
     }
 }
