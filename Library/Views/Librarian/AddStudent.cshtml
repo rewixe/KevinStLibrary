@@ -28,8 +28,8 @@
 
 <div class="row">
 	<div class="col-sm-3">
-		<input type="button" value="Edit" class="btn btn-success" onclick="location.href='@Url.Action("StudentList", "Librarian")'" />
-		<button class="btn btn-success" id="addStdBtn">Add</button>
+		<input type="button" value="Edit Student" class="btn btn-success" onclick="location.href='@Url.Action("StudentList", "Librarian")'" />
+
 	</div>
 </div>
 
@@ -57,7 +57,7 @@
 				@ViewBag.Message
 			}
 			@Html.ValidationSummary(false, "", new { @class = "text-danger" })
-			<div id="studentTable" style="visibility: hidden;">
+			<div id="studentTable">
 				<h3>Add Students Here</h3>
 				<table class="table table-hover">
 					<thead>
@@ -65,7 +65,7 @@
 							<th scope="col">Name</th>
 							<th scope="col">Email</th>
 							<th scope="col">Password</th>
-							<th scope="col">Privalige</th>
+
 							<th scope="col">Field</th>
 
 					</thead>
@@ -74,28 +74,18 @@
 							<td scope="col">@Html.EditorFor(a => a.C.CustName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Name" } })</td>
 							<td scope="col">@Html.EditorFor(a => a.C.CustEmail, new { htmlAttributes = new { @class = "form-control", @type = "email", @placeholder = "Email" } })</td>
 							<td scope="col">@Html.EditorFor(a => a.C.CPassword, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Passoword" } })</td>
-							<td scope="col">@Html.EditorFor(a => a.C.Privalige, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Privalige" } })</td>
+
 							<td scope="col">@Html.EditorFor(a => a.C.Field, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Field" } })</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<button type="submit" style="visibility:hidden;" id="stdBtn" class="btn btn-success">Add Student</button>
+			<button type="submit" id="stdBtn" class="btn btn-success">Add Student</button>
 		</form>
 	}
 
 
 
 </div>
-<script>
 
-
-	var addStudent = document.getElementById("addStdBtn");
-	addStudent.addEventListener("click", function () {
-		document.getElementById("studentTable").style.visibility = "visible";
-		document.getElementById("stdBtn").style.visibility = "visible";
-		document.getElementById("bookTable").style.visibility = "hidden";
-		document.getElementById("bookBtn").style.visibility = "hidden";
-	})
-</script>
 

@@ -1,0 +1,81 @@
+﻿@model Library.Models.ReqStudent
+@{
+	ViewBag.Title = "BookSuggestions";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+	label {
+		font-family: arial, sans-serif;
+		display: inline-block;
+		width: 100px;
+		margin-bottom: 10px;
+	}
+
+	red {
+		color: red;
+	}
+</style>
+
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+@using (Html.BeginForm("BookSuggestions", "Customer", FormMethod.Post))
+{
+
+<form>
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true)
+	@if (ViewBag.Message != null)
+	{
+		@ViewBag.Message
+	}
+	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+	@{ int cuID;
+		string type = "Book";
+		if (Session["custID"] != null)
+		{
+
+			cuID = Int32.Parse(Session["custID"].ToString());
+		}
+		else
+		{
+			cuID = 0;
+		}
+	}
+
+	<input type="text" style="visibility: hidden;" id="User_Email" value="@cuID" />
+
+	<h1> Suggestion of books for purchase</h1>
+	<p>
+		<red>* Required</red>
+
+		<label>Book title <red>*</red></label>
+		<br />@Html.EditorFor(a => a.Name, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Book" } })
+	<p />
+	<label>Author <red>*</red></label>
+	<br />@Html.EditorFor(a => a.AuthName, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Author" } })
+	<p />
+	<label>ISBN/ISMN</label>
+	<br />@Html.EditorFor(a => a.Isbn, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "ISBN" } })
+	<p />
+	<label>Subject</label>
+	<br />@Html.EditorFor(a => a.Subject, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Subject" } })
+	<p />
+
+	<label>Year</label>
+	<br />@Html.EditorFor(a => a.Year, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Year" } })
+	<p />
+
+	<input type="text" style="visibility: hidden;" id="type" value="@type" />
+
+
+
+	<button type="submit" id="bookBtn" class="btn btn-success">Send Request</button>
+</form>
+}
+
+

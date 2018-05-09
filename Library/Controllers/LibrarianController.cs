@@ -448,7 +448,8 @@ namespace Library.Controllers
 		}
 
 		//List the books to be edited
-		public ActionResult BookList()
+		[HttpGet]
+		public ActionResult BookList(string searching)
 		{
 
 			if (Session["libID"] != null)
@@ -462,21 +463,71 @@ namespace Library.Controllers
 					ViewBag.BookEdit = TempData["editMessage"].ToString();
 				}
 
+				long numSearch;
+
+				bool IsAllAlphabetic(string search)
+				{
+					for (int i = 0; i < 1; i++)
+					{
+						char c = search[i];
+						if (!char.IsLetter(c))
+							return false;
+					}
+
+					return true;
+				}
+
+
+
+				if (searching != null)
+				{
+					if (IsAllAlphabetic(searching))
+					{
+						numSearch = 0;
+					}
+					else
+					{
+						numSearch = Int64.Parse(searching);
+					}
+				}
+				else
+				{
+					numSearch = 0;
+				}
 
 				using (LibraryEntities db = new LibraryEntities())
 				{
+					var book = db.Items.Where(a => a.Name.Contains(searching) || a.Subject.Contains(searching) || a.Isbn == numSearch || a.Year == numSearch || searching == null);
 
-					return View(db.Items.ToList());
+					return View(book.ToList());
+					
 				}
-
 			}
 			else
 			{
 				return RedirectToAction("StaffLogin");
 			}
-
-
 		}
+
+	/*	public ActionResult Search()
+		{
+			return View();
+		}
+
+		
+		public ActionResult Search(string searching)
+		{
+			using (LibraryEntities db = new LibraryEntities())
+			{
+
+				var book = db.Items.Where(a => a.Name.Contains(searching));
+
+				return View(book.ToList());
+			}
+
+
+		}*/
+
 
 		public ActionResult EditBook(long isbn)
 		{
@@ -753,6 +804,99 @@ namespace Library.Controllers
 			{
 				return RedirectToAction("StaffLogin");
 			}
+		}
+
+		public ActionResult Requests()
+		{
+			if (Session["libID"] != null)
+			{
+				if (TempData["reqConfirm"] != null)
+				{
+					ViewBag.ReqConfirmMessage = TempData["reqConfirm"].ToString();
+				}
+				using (LibraryEntities db = new LibraryEntities())
+				{
+					var reqQuery = from rIt in db.ReqStudents
+								   where rIt.ReqConfirmation == "Pending"
+								  select rIt;
+
+					return View(db.ReqStudents.ToList());
+				}
+
+
+			}
+			else
+			{
+				return RedirectToAction("StaffLogin");
+			}
+
+		}
+
+		
+		public ActionResult ConfirmRequest( long Isbn, string name, string subject, string type, int year, string auth)
+		{
+			if (Session["libID"] != null)
+			{
+			
+				using (LibraryEntities db = new LibraryEntities())
+				{
+					var reqItem = from rIt in db.ReqStudents
+								  where rIt.Isbn == Isbn
+								  select rIt;
+
+					if (ModelState.IsValid)
+					{
+						Item i = new Item();
+						Author a = new Author
+						{
+							AuthName = auth,
+							Isbn = Isbn
+						};
+						
+						i.AuthorID = a.AuthorID;
+						i.Isbn = Isbn;
+						i.Name = name;
+						i.Subject = subject;
+						i.Type = type;
+						i.Year = year;
+						foreach (ReqStudent req in reqItem.ToList())
+						{
+							req.ReqConfirmation = "Confirmed";
+						}
+						db.Authors.Add(a);
+						db.Items.Add(i);
+					
+						for (int index = 0; index < 10; index++)
+						{
+							Copy cp = new Copy();
+							cp.Isbn = Isbn;
+							cp.Borrowed = "n";
+							db.Copies.Add(cp);
+						}
+
+						try
+						{
+
+							db.SaveChanges();
+							TempData["reqConfirm"] = "Book Added";
+							return RedirectToAction("Requests");
+						}
+						catch (Exception e)
+						{
+							Console.WriteLine(e);
+							// Provide for exceptions.
+						}
+
+					}
+				}
+				return RedirectToAction("Requests");
+
+			}
+			else
+			{
+				return RedirectToAction("StaffLogin");
+			}
+			
 		}
 
 

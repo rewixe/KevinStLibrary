@@ -33,7 +33,7 @@
     <Property Name="CustID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CustName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="CustEmail" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Privalige" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Privalige" Type="char" MaxLength="1" />
     <Property Name="Fine" Type="float" />
     <Property Name="CPassword" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Field" Type="varchar" MaxLength="20" Nullable="false" />
@@ -58,6 +58,32 @@
     <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="LibLocation" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Position" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReqStudent">
+    <Key>
+      <PropertyRef Name="Isbn" />
+    </Key>
+    <Property Name="CustID" Type="int" Nullable="false" />
+    <Property Name="Isbn" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Subject" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="AuthName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ReqConfirmation" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="StudentRequest">
+    <Key>
+      <PropertyRef Name="Isbn" />
+    </Key>
+    <Property Name="CustID" Type="int" Nullable="false" />
+    <Property Name="Isbn" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Subject" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="AuthName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ReqConfirmation" Type="varchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="Tag">
     <Key>
@@ -95,7 +121,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Item__AuthorID__5CD6CB2B">
+  <Association Name="FK__Item__AuthorID__72C60C4A">
     <End Role="Author" Type="Self.Author" Multiplicity="1" />
     <End Role="Item" Type="Self.Item" Multiplicity="*" />
     <ReferentialConstraint>
@@ -104,6 +130,30 @@
       </Principal>
       <Dependent Role="Item">
         <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ReqStuden__CustI__160F4887">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="ReqStudent" Type="Self.ReqStudent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustID" />
+      </Principal>
+      <Dependent Role="ReqStudent">
+        <PropertyRef Name="CustID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__StudentRe__CustI__02FC7413">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="StudentRequest" Type="Self.StudentRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustID" />
+      </Principal>
+      <Dependent Role="StudentRequest">
+        <PropertyRef Name="CustID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -162,6 +212,8 @@
     <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Librarian" EntityType="Self.Librarian" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReqStudent" EntityType="Self.ReqStudent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentRequest" EntityType="Self.StudentRequest" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TagItem" EntityType="Self.TagItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
@@ -169,9 +221,17 @@
       <End Role="Item" EntitySet="Item" />
       <End Role="Copy" EntitySet="Copy" />
     </AssociationSet>
-    <AssociationSet Name="FK__Item__AuthorID__5CD6CB2B" Association="Self.FK__Item__AuthorID__5CD6CB2B">
+    <AssociationSet Name="FK__Item__AuthorID__72C60C4A" Association="Self.FK__Item__AuthorID__72C60C4A">
       <End Role="Author" EntitySet="Author" />
       <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ReqStuden__CustI__160F4887" Association="Self.FK__ReqStuden__CustI__160F4887">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="ReqStudent" EntitySet="ReqStudent" />
+    </AssociationSet>
+    <AssociationSet Name="FK__StudentRe__CustI__02FC7413" Association="Self.FK__StudentRe__CustI__02FC7413">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="StudentRequest" EntitySet="StudentRequest" />
     </AssociationSet>
     <AssociationSet Name="FK__TagItem__Isbn__4222D4EF" Association="Self.FK__TagItem__Isbn__4222D4EF">
       <End Role="Item" EntitySet="Item" />

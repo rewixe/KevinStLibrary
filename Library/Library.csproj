@@ -255,6 +255,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LibraryDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReqStudent.cs">
+      <DependentUpon>LibraryDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestViewModel.cs" />
+    <Compile Include="Models\StudentRequest.cs">
+      <DependentUpon>LibraryDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tag.cs">
       <DependentUpon>LibraryDBModel.tt</DependentUpon>
     </Compile>
@@ -358,6 +365,9 @@
     <Content Include="Views\Librarian\SubjectGuide.cshtml" />
     <Content Include="Views\Customer\Search.cshtml" />
     <Content Include="Views\Customer\SuggestedBook.cshtml" />
+    <Content Include="Views\Customer\BookSuggestions.cshtml" />
+    <Content Include="Views\Librarian\Requests.cshtml" />
+    <Content Include="Views\Customer\RequestPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BookSuggestion\" />

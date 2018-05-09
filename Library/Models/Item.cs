@@ -11,9 +11,8 @@ namespace Library.Models
 {
     using System;
     using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-
-	public partial class Item
+    
+    public partial class Item
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Item()
@@ -21,23 +20,15 @@ namespace Library.Models
             this.Copies = new HashSet<Copy>();
             this.TagItems = new HashSet<TagItem>();
         }
-
-
-		[Required(ErrorMessage = "ISBN REQUIRED")]
-		public long Isbn { get; set; }
-		[StringLength(100)]
-		[Required(ErrorMessage = "ITEM NAME REQUIRED")]
-		public string Name { get; set; }
-		[Required(ErrorMessage = "PUBLISH YEAR REQUIRED")]
-		[Range(100, 9999)]
-		public int Year { get; set; }
-		[Required(ErrorMessage = "ITEM SUBJECT REQUIRED")]
-		public string Subject { get; set; }
-		[Required(ErrorMessage = "ITEM TYPE REQUIRED")]
-		public string Type { get; set; }
-		public int AuthorID { get; set; }
-
-		public virtual Author Author { get; set; }
+    
+        public long Isbn { get; set; }
+        public string Name { get; set; }
+        public int Year { get; set; }
+        public string Subject { get; set; }
+        public string Type { get; set; }
+        public int AuthorID { get; set; }
+    
+        public virtual Author Author { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Copy> Copies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

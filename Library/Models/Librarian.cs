@@ -11,15 +11,12 @@ namespace Library.Models
 {
     using System;
     using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-
-	public partial class Librarian
+    
+    public partial class Librarian
     {
-		[Required(ErrorMessage = "Please Enter Correct ID")]
-		public int LibrarianID { get; set; }
+        public int LibrarianID { get; set; }
         public string Name { get; set; }
-		[Required(ErrorMessage = "Please Enter Correct Password")]
-		public string Password { get; set; }
+        public string Password { get; set; }
         public string LibLocation { get; set; }
         public string Position { get; set; }
     }
