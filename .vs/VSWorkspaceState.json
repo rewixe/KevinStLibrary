@@ -3,8 +3,9 @@
     "",
     "\\Library",
     "\\Library\\App_Data",
-    "\\Library\\Controllers"
+    "\\Library\\Controllers",
+    "\\Library\\Models"
   ],
-  "SelectedNode": "\\Library\\App_Data\\Library.mdf",
+  "SelectedNode": "\\Library\\Models\\LibraryDBModel.edmx",
   "PreviewInSolutionExplorer": false
 }
