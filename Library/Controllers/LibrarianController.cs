@@ -509,24 +509,6 @@ namespace Library.Controllers
 			}
 		}
 
-	/*	public ActionResult Search()
-		{
-			return View();
-		}
-
-		
-		public ActionResult Search(string searching)
-		{
-			using (LibraryEntities db = new LibraryEntities())
-			{
-
-				var book = db.Items.Where(a => a.Name.Contains(searching));
-
-				return View(book.ToList());
-			}
-
-
-		}*/
 
 
 		public ActionResult EditBook(long isbn)

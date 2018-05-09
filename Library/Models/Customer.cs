@@ -26,7 +26,7 @@ namespace Library.Models
         public string CustName { get; set; }
         public string CustEmail { get; set; }
         public string Privalige { get; set; }
-        public Nullable<double> Fine { get; set; }
+        public Nullable<int> Fine { get; set; }
         public string CPassword { get; set; }
         public string Field { get; set; }
     

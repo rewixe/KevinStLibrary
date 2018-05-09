@@ -2,10 +2,16 @@
   "ExpandedNodes": [
     "",
     "\\Library",
+<<<<<<< HEAD
     "\\Library\\App_Data",
     "\\Library\\Controllers",
     "\\Library\\Models"
   ],
   "SelectedNode": "\\Library\\Models\\LibraryDBModel.edmx",
+=======
+    "\\Library\\Views"
+  ],
+  "SelectedNode": "\\Library\\Views\\Book",
+>>>>>>> Faoilean
   "PreviewInSolutionExplorer": false
 }
