@@ -36,7 +36,7 @@ namespace Library.Controllers
 				ViewBag.LoginMessage = TempData["loginMessage"].ToString();
 			}
 
-			
+
 
 			DateTime today = DateTime.Now.Date;
 			DateTime retDay = today.AddDays(6);
@@ -46,7 +46,7 @@ namespace Library.Controllers
 			Debug.WriteLine(today);
 			Debug.WriteLine(retDay);
 			Debug.WriteLine(r);
-			
+
 
 
 
@@ -84,6 +84,10 @@ namespace Library.Controllers
 		{
 			if (Session["custID"] != null)
 			{
+				if (TempData["fineMessage"] != null)
+				{
+					ViewBag.FineMessage = TempData["fineMessage"].ToString();
+				}
 				if (TempData["borrowMessage"] != null)
 				{
 					ViewBag.BorrowedMessage = TempData["borrowMessage"].ToString();
@@ -163,20 +167,32 @@ namespace Library.Controllers
 			{
 				using (LibraryEntities db = new LibraryEntities())
 				{
-					
+
 					int cID = Int32.Parse(Session["custID"].ToString());
-					var checkTrans = from c in db.Copies
+					/*var checkTrans = from c in db.Copies
 									 from t in db.Transactions
 									 where c.CopyID == t.CopyID && c.Isbn == bookId && t.CustID == cID
-									 select c;
+									 select c;*/
 
-					foreach (Copy cp in checkTrans.ToList())
+					var checkTrans = from c in db.Copies
+									 join t in db.Transactions on c.CopyID equals t.CopyID
+									 join cust in db.Customers on t.CustID equals cust.CustID
+									 where c.CopyID == t.CopyID && c.Isbn == bookId && t.CustID == cID && t.CustID == cust.CustID
+									 select new ItemLibrarianViewModel { C = cust, Cp = c, Tc = t };
+
+					foreach (ItemLibrarianViewModel cp in checkTrans.ToList())
 					{
-						if (cp.Borrowed != "n")
+						if (cp.C.Fine > 0)
+						{
+							TempData["fineMessage"] = "Go to the Library to Pay Fines Before Borrowing  more Books";
+							return RedirectToAction("UserArea");
+						}
+						else if (cp.Cp.Borrowed != "n")
 						{
 							TempData["borrowMessage"] = "Already Borrowed This Book";
 							return RedirectToAction("UserArea");
 						}
+
 					}
 
 					Transaction t1 = new Transaction();
@@ -187,7 +203,7 @@ namespace Library.Controllers
 					{
 						foreach (Copy cp1 in copyQuery.ToList())
 						{
-							
+
 							if (cp1.Borrowed != "y")
 							{
 
@@ -204,6 +220,7 @@ namespace Library.Controllers
 								t1.TransacType = "Borrowed";
 								db.Transactions.Add(t1);
 								db.SaveChanges();
+
 								var book = db.Items.Where(a => a.Isbn.Equals(cp1.Isbn)).FirstOrDefault();
 								TempData["reserveMessage"] = book.Name.ToString() + ". Awaiting Collection Confirmation.";
 								return RedirectToAction("UserArea");
@@ -301,7 +318,7 @@ namespace Library.Controllers
 
 		public ActionResult Search()
 		{
-			
+
 			return View();
 		}
 
@@ -313,12 +330,12 @@ namespace Library.Controllers
 				TempData["Invalid Search"] = "Enter Valid Search Please";
 				return View();
 			}*/
-			
+
 			long numSearch;
 
 			bool IsAllAlphabetic(string search)
 			{
-				for(int i = 0; i < 1;i++)
+				for (int i = 0; i < 1; i++)
 				{
 					char c = search[i];
 					if (!char.IsLetter(c))
@@ -429,11 +446,11 @@ namespace Library.Controllers
 					reqObj.Type = "Book";
 					reqObj.ReqConfirmation = "Pending";
 					db.ReqStudents.Add(reqObj);
-					
+
 
 					try
 					{
-						
+
 						db.SaveChanges();
 						TempData["reqSent"] = "Request Sent";
 						return RedirectToAction("UserArea");
@@ -448,7 +465,7 @@ namespace Library.Controllers
 				}
 
 
-				
+
 			}//end ModelStateif
 			return View();
 		}//end ActionResult 
@@ -462,20 +479,13 @@ namespace Library.Controllers
 				{
 					var reqQuery = from r in db.ReqStudents
 								   where r.CustID == cID && r.ReqConfirmation == "Confirmed"
-								   select new RequestViewModel {Name = r.Name, AuthName = r.AuthName, ReqConfirmation = r.ReqConfirmation, Isbn = r.Isbn, Subject = r.Subject, Year = r.Year };
+								   select new RequestViewModel { Name = r.Name, AuthName = r.AuthName, ReqConfirmation = r.ReqConfirmation, Isbn = r.Isbn, Subject = r.Subject, Year = r.Year };
 
 					var req = db.ReqStudents.Where(a => a.CustID.Equals(cID));
 
 					reqQuery.ToList();
 
-					foreach (var i in reqQuery.ToList())
-					{
-						Debug.WriteLine(i.Name);
-						Debug.WriteLine(i.AuthName);
-						Debug.WriteLine(i.Isbn);
-						
-
-					}
+				
 
 					return View(req.ToList());
 				}
@@ -485,7 +495,7 @@ namespace Library.Controllers
 			{
 				return RedirectToAction("Login");
 			}
-				
+
 		}
 	}
 }
