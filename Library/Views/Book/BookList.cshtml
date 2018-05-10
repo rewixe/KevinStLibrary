@@ -6,7 +6,7 @@
 		Layout = "~/Views/Shared/_Layout.cshtml";
 	}
 
-
+<br />
 <h2>Books</h2>
 
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -52,6 +52,7 @@
 		<div class="col-sm-4">
 			<h2>Book List</h2>
 		</div>
+        <div class="col-sm-4"><input type="button" value="Search Books" class="btn btn-primary btn-sm float-right" onclick="location.href='@Url.Action("Search", "Customer")'" /></div>
 		
 	</div>
 	<table class="table table-hover">
