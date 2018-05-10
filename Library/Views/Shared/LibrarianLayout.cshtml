@@ -23,11 +23,9 @@
 
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
-
-				<li class="nav-item"> @Html.ActionLink("Home", "BookList", "Librarian", null, new { @class = "nav-link" })</li>
-
-				<li class="nav-item">@Html.ActionLink("Subject Guides", "", "Librarian", null, new { @class = "nav-link" })</li>
-
+				<li class="nav-item"> 
+                    @Html.ActionLink("Books", "BookList", "Librarian", null, new { @class = "nav-link" })
+                </li>
 				<li class="nav-item">
 					@Html.ActionLink("Student Info", "StudentList", "Librarian", null, new { @class = "nav-link" })
 				</li>
@@ -45,7 +43,7 @@
 
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
-				<input type="button" value="Log Out" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("LogOut", "Librarian")'" />
+				<input type="button" value="Log Out" class="btn btn- btn-sm" onclick="location.href='@Url.Action("LogOut", "Librarian")'" />
 			</form>
 		</div>
 	</nav>
