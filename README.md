@@ -1,2 +1,3 @@
 # Library2.0
-Take 2
+Library website and database for DIT student library.
+
